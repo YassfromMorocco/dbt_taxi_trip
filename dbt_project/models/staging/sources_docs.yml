@@ -1,0 +1,9 @@
+sources:
+  - name: uber_raw
+    description: Database Yellow Taxi Trip
+    database: DBT_SAMPLE_DATA
+    schema: UBER_DATASET
+    
+    tables: 
+      - name: UBER_YELLOW_TAXI_TRIPS
+        description: Raw trips yeallow taxi table
