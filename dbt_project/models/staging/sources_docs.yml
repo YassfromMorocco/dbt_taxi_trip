@@ -7,3 +7,8 @@ sources:
     tables: 
       - name: UBER_YELLOW_TAXI_TRIPS
         description: Raw trips yeallow taxi table
+        columns:
+         - name: VENDORID
+           description: Driver ID
+           tests:
+             - not_null
