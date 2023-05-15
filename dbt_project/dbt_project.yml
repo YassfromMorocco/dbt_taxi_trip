@@ -54,3 +54,4 @@ vars:
 
 on-run-end:
  - "{{ store_test_nodes(results) }}"
+ - "{{ store_model_nodes(results) }}"
