@@ -22,14 +22,14 @@
     {{ return('') }}
   {% endif -%}
 
-  {% set temp_model_table = var('dbt_test_dataset')  ~ '.model_results_temp'%}
-  {%- set history_model_table = var('dbt_test_dataset')  ~ '.model_results_historical'%}
+  {% set temp_model_table = var('dbt_project')  ~ '.' ~ var('dbt_test_dataset')  ~ '.model_results_temp'%}
+  {%- set history_model_table = var('dbt_project')  ~ '.' ~ var('dbt_test_dataset')  ~ '.model_results_historical'%}
 
   /*
   --logs to know where data is stored
   */ 
-  {{ log("Centralizing " ~ model_results|length ~ " test results in " + temp_model_table, info = true) }}
-  {{ log("Centralizing " ~ model_results|length ~ " test results in " + history_model_table, info = true) }}
+  {%- set temp_model_table -%} {{ target.schema }}.model_results_temp {%- endset -%}
+  {%- set history_model_table -%} {{ target.schema }}.model_results_historical {%- endset -%}
 
   /*
   --create temporary table to store test logs
@@ -49,10 +49,9 @@
         CAST('{{ process_refs(model.node.sources, is_src=true) }}' AS STRING) AS model_source,
         CAST('{{ model.timing[1].started_at }}' AS STRING) AS execute_start_at,
         CAST('{{ model.execution_time }}' AS STRING) AS model_execution_time_seconds,
-        CAST('{{ model.adapter_response.bytes_processed }}' AS integer) AS bytes_processed,
+        CAST('{{ model.adapter_response.bytes_processed }}' AS STRING) AS bytes_processed,
         CAST('{{ model.adapter_response.rows_affected }}' AS STRING) AS rows_affected
       {{ "union all" if not loop.last }}
-
 
     {%- endfor %}
   );

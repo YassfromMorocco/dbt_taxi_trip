@@ -12,3 +12,32 @@ sources:
            description: Driver ID
            tests:
              - not_null
+
+sources:
+  - name: uber_raw
+    description: Database Yellow Taxi Trip
+    database: DBT_SAMPLE_DATA
+    schema: UBER_DATASET
+    
+    tables: 
+      - name: UBER_YELLOW_TAXI_TRIPS
+        description: Raw trips yeallow taxi table
+        columns:
+         - name: VENDORID
+           description: Driver ID
+           tests:
+             - not_null
+
+  - name: nyc_weather_raw
+    description: Database New York City Weather
+    database: DBT_SAMPLE_DATA
+    schema: NYC_WEATHER_DATASET
+    
+    tables: 
+      - name: NYC_WEATHER
+        description: Raw NYC weather table
+        columns:
+         - name: TEMP
+           description: Temperature in celsius
+           tests:
+             - not_null
