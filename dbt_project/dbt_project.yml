@@ -36,3 +36,22 @@ models:
     staging:
       +materialized: view
       +schema: staging
+
+tests:
+  dbt_taxi_trip:
+    +store_failures: true
+    +limit: 10
+    +schema: dbt_test_failures
+
+vars:
+# Project Variables; they are accessible in all resources of the dbt project
+
+ dbt_project : DBT_SAMPLE_DATA
+ dbt_test_dataset : dbt_test_failures
+### on-run_end is a way to run sql statements after dbt commands
+### see the documentation for more information
+### https://docs.getdbt.com/reference/project-configs/on-run-start-on-run-end
+
+on-run-end:
+ - "{{ store_test_nodes(results) }}"
+ - "{{ store_model_nodes(results) }}"
