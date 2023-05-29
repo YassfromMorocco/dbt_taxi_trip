@@ -36,7 +36,9 @@ models:
     staging:
       +materialized: view
       +schema: staging
-
+    mart:
+      +materialized: table
+      +schema: mart
 tests:
   dbt_taxi_trip:
     +store_failures: true
